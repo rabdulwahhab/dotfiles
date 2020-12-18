@@ -15,7 +15,7 @@ if [ -f "$BABASHKA" ]; then
 fi
 
 # SH zshrc sync
-source ./.zshrc-import
+source ~/.zshrc-import
 
 # git shortcuts
 alias ga='git add'
@@ -66,3 +66,5 @@ export NVM_DIR="$HOME/.nvm"
 # opam configuration
 test -r /Users/rayyan/.opam/opam-init/init.zsh && . /Users/rayyan/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
+# Init my scripts
+alias rayscripts='/usr/bin/git --git-dir=/Users/rayyan/.rayscripts/ --work-tree=/Users/rayyan'
