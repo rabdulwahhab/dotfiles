@@ -2,7 +2,7 @@ export CLICOLOR=1
 export LSCOLORS=GxcxDxHxBxegedabagaced
 
 # Add my scripts
-export PATH=$PATH:~/Programming/Scripts
+export PATH=$PATH:~/rayscripts
 
 # define prompt
 PROMPT='%F{150}%2~%f %(?.%F{42}>%f.%F{9}%? ✗%f) '
@@ -66,5 +66,3 @@ export NVM_DIR="$HOME/.nvm"
 # opam configuration
 test -r /Users/rayyan/.opam/opam-init/init.zsh && . /Users/rayyan/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
-# Init my scripts
-alias rayscripts='/usr/bin/git --git-dir=/Users/rayyan/.rayscripts/ --work-tree=/Users/rayyan'
