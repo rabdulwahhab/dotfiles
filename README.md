@@ -1,2 +1,1 @@
-## Rayyan's dotfiles
-and other config
+## Common system configuration files
