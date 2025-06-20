@@ -1,4 +1,4 @@
-// Zed keymap
+// Rayyan's Zed keymap
 //
 // For information on binding keys, see the Zed
 // documentation: https://zed.dev/docs/key-bindings
@@ -9,6 +9,8 @@
   {
     "context": "Workspace",
     "bindings": {
+      "alt-left": "pane::GoBack",
+      "alt-right": "pane::GoForward"
       // "shift shift": "file_finder::Toggle"
     }
   },
