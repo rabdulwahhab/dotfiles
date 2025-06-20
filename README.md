@@ -1,1 +1,1 @@
-## Common system configuration files
+## System and tool configuration files

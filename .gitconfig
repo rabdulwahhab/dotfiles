@@ -1,7 +1,0 @@
-[user]
-	name = rayyan
-	email = rayyan10@bellsouth.net
-[core]
-	autocrlf = input
-[http]
-	postBuffer = 1048576000
