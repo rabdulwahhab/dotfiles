@@ -26,7 +26,10 @@
       // Put key bindings here if you want them to work in normal & visual mode.
       "ctrl-w": "pane::CloseActiveItem",
       "ctrl-c": "editor::Copy",
-      "ctrl-v": "editor::Paste"
+      "ctrl-v": "editor::Paste",
+      "ctrl-shift-b": "workspace::ToggleLeftDock",
+      "ctrl-shift-j": "workspace::ToggleBottomDock",
+      "ctrl-shift-t": "project_panel::ToggleFocus"
     }
   },
   {
