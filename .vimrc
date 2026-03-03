@@ -1,134 +1,101 @@
-" Rayyan's vim configuration
+" Base vim config based on: https://github.com/mathiasbynens/dotfiles/blob/main/.vimrc
 
-" Uncomment to download vim-plug
-"if empty(glob('~/.vim/autoload/plug.vim'))
-"  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-"    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-"  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-"endif
-
-" Use true colors if available
-if has('termguicolors')
-  set termguicolors
+" Make Vim more useful
+set nocompatible
+" Use the OS clipboard by default (on versions compiled with `+clipboard`)
+set clipboard=unnamed
+" Enhance command-line completion
+set wildmenu
+" Allow cursor keys in insert mode
+set esckeys
+" Allow backspace in insert mode
+set backspace=indent,eol,start
+" Optimize for fast terminal connections
+set ttyfast
+" Add the g flag to search/replace by default
+set gdefault
+" Use UTF-8 without BOM
+set encoding=utf-8 nobomb
+" Don’t add empty newlines at the end of files
+set binary
+set noeol
+" Centralize backups, swapfiles and undo history
+set backupdir=~/.vim/backups
+set directory=~/.vim/swaps
+if exists("&undodir")
+	set undodir=~/.vim/undo
 endif
 
-" Set font
-set guifont=Consolas:h30
+" Don’t create backups when editing files in certain directories
+set backupskip=/tmp/*,/private/tmp/*
 
-" Polyglot python config
-let g:polyglot_disabled = ['python', 'python-indent']
-let g:polyglot_disabled = ['autoindent']
-
-" Init Vim plugins 
-call plug#begin('~/.vim/plugged')
-
-Plug 'preservim/nerdtree'
-Plug 'bling/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'junegunn/rainbow_parentheses.vim'
-"Plug 'sheerun/vim-polyglot'
-Plug 'yggdroot/indentline'
-Plug 'dense-analysis/ale'
-
-call plug#end()
-" NOTE: use ':PlugInstall' to use plugins
-
-" Set compatibility to Vim only.
-"set nocompatible
-
-" Helps force plug-ins to load correctly when it is turned back on below.
-filetype off
-
-" Set colorscheme
-"colo lightline
-
-" Set cursorline highlighting
-set cursorline
-
-" Far affecting MacVim's bg when opened from terminal
-set background=light
-
-" For plug-ins to load correctly.
-filetype on
-filetype plugin on
-filetype indent on
-
-" Airline statusbar theme
-let g:airline_theme='light'
-
-" Turn on syntax highlighting.
-syntax on
-
-" Enable linting
-" NOTE: toggle with `:ALEToggle`
-let g:ale_linters={'clojure': ['clj-kondo']}
-
-" Auto indent and spaces for tabs
-set softtabstop=2
-set shiftwidth=2
-set expandtab
-set autoindent
-set cindent
-inoremap { {<CR>}<up><end><CR>
-
-" Don't indent when pasting
-set pastetoggle=<f5>
-
-" Turn off modelines
-"set modelines=0
-
-" Automatically wrap text that extends beyond the screen length.
-set wrap
-
-" Highlight matching pairs of brackets. Use the '%' character to jump between them.
-set matchpairs+=<:>
-
-" Show line numbers
+" Respect modeline in files
+set modeline
+set modelines=4
+" Enable per-directory .vimrc files and disable unsafe commands in them
+set exrc
+set secure
+" Enable line numbers
 set number
-
-" Encoding
-set encoding=utf-8
-
-" Highlight matching search patterns
+" Enable syntax highlighting
+syntax on
+" Highlight current line
+set cursorline
+" Make tabs as wide as two spaces
+set tabstop=2
+" Show “invisible” characters
+set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
+set list
+" Highlight searches
 set hlsearch
-
-" Enable incremental search
-set incsearch
-
-" Include matching uppercase words with lowercase search term
+" Ignore case of searches
 set ignorecase
-
-" Include only uppercase words with uppercase search term
-set smartcase
-
-" Not sure why but this is needed for status bar plugin
+" Highlight dynamically as pattern is typed
+set incsearch
+" Always show status line
 set laststatus=2
+" Enable mouse in all modes
+set mouse=a
+" Disable error bells
+set noerrorbells
+" Don’t reset cursor to start of line when moving around.
+set nostartofline
+" Show the cursor position
+set ruler
+" Don’t show the intro message when starting Vim
+set shortmess=atI
+" Show the current mode
+set showmode
+" Show the filename in the window titlebar
+set title
+" Show the (partial) command as it’s being typed
+set showcmd
+" Use relative line numbers
+if exists("&relativenumber")
+	set relativenumber
+	au BufReadPost * set relativenumber
+endif
+" Start scrolling three lines before the horizontal window border
+set scrolloff=3
 
-" Remove default status bar
-set noshowmode
+" Strip trailing whitespace (,ss)
+function! StripWhitespace()
+	let save_cursor = getpos(".")
+	let old_query = getreg('/')
+	:%s/\s\+$//e
+	call setpos('.', save_cursor)
+	call setreg('/', old_query)
+endfunction
+noremap <leader>ss :call StripWhitespace()<CR>
+" Save a file as root (,W)
+noremap <leader>W :w !sudo tee % > /dev/null<CR>
 
-" Start NerdTree on 'vim'
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-" Toggle NerdTree hotkey
-map <C-t> :NERDTreeToggle<CR>
-
-" Toggle Indent Guides
-map <C-i> :IndentLinesToggle<CR>
-
-" Enable Indent Guides on startup
-let g:indent_guides_enable_on_vim_startup = 1
-
-" Activate RainbowParens based on file type
-augroup rainbow_lisp
-  autocmd!
-  autocmd FileType lisp,clojure,scheme RainbowParentheses
-augroup END
-
-" Customize Raindbow Parens
-let g:rainbow#max_level = 16
-let g:rainbow#pairs = [['(', ')'], ['[', ']']]
-
-" List of unwanted colors. ANSI code or #RRGGBB
-let g:rainbow#blacklist = [233, 234]
+" Automatic commands
+if has("autocmd")
+	" Enable file type detection
+	filetype on
+	" Treat .json files as .js
+	autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
+	" Treat .md files as Markdown
+	autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
+endif
