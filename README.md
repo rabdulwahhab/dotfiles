@@ -28,6 +28,19 @@ Without moving files or creating symlinks.
 
 ---
 
+# TL;DR
+
+| Action               | Command                  |
+| -------------------- | ------------------------ |
+| Status               | `dotfiles status`             |
+| Add file             | `dotfiles add <file>`         |
+| Commit               | `dotfiles commit -m "msg"`    |
+| Push                 | `dotfiles push`               |
+| Remove from tracking | `dotfiles rm --cached <file>` |
+| Show diff            | `dotfiles diff`               |
+
+---
+
 # Initial Setup (New Machine)
 
 ## 1. Clone the Bare Repository
@@ -229,19 +242,3 @@ If switching machines:
 * Keep this repo small and intentional.
 * Treat environment setup as infrastructure.
 
----
-
-# Quick Reference
-
-| Action               | Command                  |
-| -------------------- | ------------------------ |
-| Status               | `dotfiles status`             |
-| Add file             | `dotfiles add <file>`         |
-| Commit               | `dotfiles commit -m "msg"`    |
-| Push                 | `dotfiles push`               |
-| Remove from tracking | `dotfiles rm --cached <file>` |
-| Show diff            | `dotfiles diff`               |
-
----
-
-End.
