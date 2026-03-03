@@ -4,6 +4,8 @@ Personal environment configuration managed via a **bare Git repository**.
 
 This repo tracks configuration files directly in `$HOME` without symlinks.
 
+Inspiration: https://medium.com/@augusteo/simplest-way-to-sync-dotfiles-and-config-using-git-14051af8703a
+
 ---
 
 # Overview
