@@ -3,3 +3,6 @@
 
 # load machine-specific overrides (keep this at the bottom)
 [ -f "$HOME/.zshenv.local" ] && . "$HOME/.zshenv.local"
+
+# Source shared env vars
+[ -f "$HOME/.env.sh" ] && . "$HOME/.env.sh"
