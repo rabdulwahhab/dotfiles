@@ -42,3 +42,6 @@ alias gs='git status'
 
 # Miscellaneous
 alias weather="curl http://wttr.in"
+
+# local aliases override (keep this at the bottom)
+[ -f "$HOME/.aliases.local.sh" ] && . "$HOME/.aliases.local.sh"
