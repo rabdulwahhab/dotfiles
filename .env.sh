@@ -1,4 +1,4 @@
-# Environment variables go here.
+# All shared shell environment variables go here. This file is `source`'d by bash and zsh.
 # Credits:
 # - https://github.com/mathiasbynens/dotfiles
 
