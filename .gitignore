@@ -1,3 +1,7 @@
 # Folder view configuration files
 .DS_Store
 Desktop.ini
+
+# local-only shell config
+.env.local.sh
+.aliases.local.sh
