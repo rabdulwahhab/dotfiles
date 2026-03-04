@@ -30,8 +30,8 @@ alias mv="mv -iv"
 #             └─ prompt before overwriting an existing file
 alias rm="rm -rf --"
 alias l="ls"
-alias ll="ls -a"
-alias lll="ls -ltrA"
+alias ll="ls -A"
+alias lll="ls -ltrAh"
 
 # Enable aliases to be sudo’ed
 alias sudo='sudo '
