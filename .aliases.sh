@@ -1,6 +1,10 @@
+# All shared shell aliases go here. This file is `source`'d by bash and zsh.
 # Credits:
 # - https://github.com/mathiasbynens/dotfiles
 # - https://github.com/alrra/dotfiles
+
+# Dotfiles config
+alias dotfiles="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 
 # Easier navigation
 alias ..="cd .."
@@ -10,9 +14,9 @@ alias cd..="cd .."
 
 # Always enable colored `grep` output
 # Note: `GREP_OPTIONS="--color=auto"` is deprecated, hence the alias usage.
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
+alias grep="grep --color=auto"
+alias fgrep="fgrep --color=auto"
+alias egrep="egrep --color=auto"
 
 # bin aliases
 alias cp="cp -iv"
