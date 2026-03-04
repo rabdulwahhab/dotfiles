@@ -2,6 +2,9 @@
 # Credits:
 # - https://github.com/mathiasbynens/dotfiles
 
+# Add local bin dir
+export PATH="$HOME/.local/bin:$PATH"
+
 # Make vim the default editor.
 export EDITOR='vim';
 
