@@ -8,3 +8,6 @@
 
 # zsh-only extras
 [ -f "$HOME/.functions.zsh" ] && . "$HOME/.functions.zsh"
+
+# load machine-specific overrides (keep this at the bottom)
+[ -f "$HOME/.zshrc.local" ] && . "$HOME/.zshrc.local"
