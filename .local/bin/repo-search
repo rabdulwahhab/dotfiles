@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat >&2 <<'EOF'
+repo-search: project search (ag-first)
+
+Usage:
+  repo-search [--hidden] [--files] [--type <agtype>] [--] <pattern> [path...]
+  repo-search --help
+
+Examples:
+  repo-search "Phoenix.Router"
+  repo-search --hidden "TODO"
+  repo-search --type elixir "defmodule" lib test
+  repo-search --files
+EOF
+}
+
+hidden=0
+files=0
+agtype=""
+
+# Parse simple flags
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --help|-h) usage; exit 0 ;;
+    --hidden) hidden=1; shift ;;
+    --files) files=1; shift ;;
+    --type)
+      [ $# -ge 2 ] || { echo "repo-search: --type requires a value" >&2; exit 2; }
+      agtype="$2"; shift 2 ;;
+    --) shift; break ;;
+    *) break ;;
+  esac
+done
+
+# Determine repo root if available; stay in cwd otherwise
+if git rev-parse --show-toplevel >/dev/null 2>&1; then
+  root="$(git rev-parse --show-toplevel)"
+  cd "$root"
+fi
+
+# Prefer ag; fallback to rg; then grep
+if command -v ag >/dev/null 2>&1; then
+  # Base options:
+  # -U: include hidden files + ignore .gitignore (we only use it when --hidden)
+  # --nogroup --nocolor: stable output for agents
+  # --smart-case: good default
+  # --follow: follow symlinks (common in mono-repos); remove if you dislike it
+  # --ignore: extra ignores on top of .gitignore (ag respects .gitignore by default)
+  common_opts=(--nogroup --nocolor --smart-case --follow)
+  ignore_opts=(--ignore .git --ignore node_modules --ignore _build --ignore deps --ignore dist --ignore build --ignore .elixir_ls)
+
+  if [ "$files" -eq 1 ]; then
+    if [ "$hidden" -eq 1 ]; then
+      exec ag -U -l "${common_opts[@]}" "${ignore_opts[@]}" .
+    else
+      exec ag -l "${common_opts[@]}" "${ignore_opts[@]}" .
+    fi
+  fi
+
+  [ $# -ge 1 ] || { usage; exit 2; }
+  pattern="$1"; shift
+
+  type_opts=()
+  if [ -n "$agtype" ]; then
+    type_opts=(--type "$agtype")
+  fi
+
+  if [ "$hidden" -eq 1 ]; then
+    # -U includes hidden files AND ignores ignore files.
+    # We compensate by manually ignoring common junk via ignore_opts.
+    exec ag -U "${common_opts[@]}" "${ignore_opts[@]}" "${type_opts[@]}" -- "$pattern" "$@"
+  else
+    exec ag "${common_opts[@]}" "${ignore_opts[@]}" "${type_opts[@]}" -- "$pattern" "$@"
+  fi
+fi
+
+if command -v rg >/dev/null 2>&1; then
+  # fallback to ripgrep (kept minimal)
+  if [ "$files" -eq 1 ]; then
+    exec rg --files --hidden --glob '!.git' --glob '!node_modules' --glob '!_build' --glob '!deps'
+  fi
+  [ $# -ge 1 ] || { usage; exit 2; }
+  exec rg --smart-case --no-heading --color never --hidden \
+    --glob '!.git' --glob '!node_modules' --glob '!_build' --glob '!deps' \
+    -- "$@"
+fi
+
+# final fallback: grep (slower, less correct)
+if [ "$files" -eq 1 ]; then
+  exec find . -type f -not -path '*/.git/*' -not -path '*/node_modules/*' -not -path '*/_build/*' -not -path '*/deps/*'
+fi
+[ $# -ge 1 ] || { usage; exit 2; }
+pattern="$1"; shift
+exec grep -RIn --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=_build --exclude-dir=deps -- "$pattern" "${@:-.}"
