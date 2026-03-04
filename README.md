@@ -34,12 +34,19 @@ Without moving files or creating symlinks.
 
 | Action               | Command                  |
 | -------------------- | ------------------------ |
+| List tracked files               | `dotfiles ls-files`             |
+| Show commit history               | `dotfiles log`             |
 | Status               | `dotfiles status`             |
-| Add file             | `dotfiles add <file>`         |
+| Add file (or stage changes to an existing file)             | `dotfiles add <file>`         |
 | Commit               | `dotfiles commit -m "msg"`    |
 | Push                 | `dotfiles push`               |
-| Remove from tracking | `dotfiles rm --cached <file>` |
+| Pull                 | `dotfiles pull`               |
+| Remove from tracking but keep the file | `dotfiles rm --cached <file>` |
+| Remove from tracking and system | `dotfiles rm <file>` |
 | Show diff            | `dotfiles diff`               |
+| Reset a file to match remote           | `dotfiles checkout -- <file>`               |
+| Reset all local files to match remote           | `dotfiles reset --hard origin/main`               |
+| Hide untracked files           | `dotfiles config --local status.showUntrackedFiles no`               |
 
 ---
 
@@ -79,6 +86,7 @@ If you see conflicts:
 
 * Move conflicting files out of the way
 * Re-run `dotfiles checkout`
+* Add the `-f` flag to force checkout and overwrite conflicting files
 
 Example:
 
