@@ -20,3 +20,6 @@ export LESS_TERMCAP_md="${yellow}";
 
 # Don’t clear the screen after quitting a manual page.
 export MANPAGER='less -X';
+
+# local overrides / secrets / machine-specific (keep this at the bottom)
+[ -f "$HOME/.env.local.sh" ] && . "$HOME/.env.local.sh"
