@@ -12,5 +12,5 @@ case $- in *i*) ;; *) return ;; esac
 # bash-only extras
 [ -f "$HOME/.functions.bash" ] && . "$HOME/.functions.bash"
 
-# load machine-specific overrides
+# load machine-specific overrides (keep this at the bottom)
 [ -f "$HOME/.bashrc.local" ] && . "$HOME/.bashrc.local"
