@@ -43,8 +43,3 @@ dot reset --hard "origin/$BRANCH"
 
 # 4) Hide untracked files (otherwise `dotfiles status` would show your entire HOME)
 dot config --local status.showUntrackedFiles no
-
-# Ensure scripts in ~/.local/bin are executable
-if [ -d "$HOME/.local/bin" ]; then
-  chmod +x "$HOME/.local/bin/"* 2>/dev/null || true
-fi
