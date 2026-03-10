@@ -39,6 +39,7 @@ alias sudo='sudo '
 # git shortcuts
 alias ga='git add'
 alias gs='git status'
+alias gcm='git commit -m'
 
 # Miscellaneous
 alias weather="curl http://wttr.in"
