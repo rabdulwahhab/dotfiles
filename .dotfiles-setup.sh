@@ -4,42 +4,42 @@ set -euo pipefail
 # ------------------------------------------------------------------------------
 # Dotfiles installer (bare repo, work-tree = $HOME)
 #
+# Assumes this script is being run from an already-cloned dotfiles repo
+# (for example by VS Code Dev Containers dotfiles support).
+#
 # What it does:
-#   - Ensures a bare git repo exists at: ~/.dotfiles
+#   - Creates a bare repo at: ~/.dotfiles
 #   - Ensures origin points to your dotfiles repo
-#   - Forces your tracked dotfiles in $HOME to match: origin/main
+#   - Forces tracked files in $HOME to match the fetched main branch
 #   - Hides untracked files from `dot status` (since work-tree is $HOME)
 #
-# Safe/unsafe notes:
-#   - This overwrites ONLY tracked files with the versions from origin/main.
-#   - It does NOT delete untracked files in $HOME.
-#
-# Requirements:
-#   - git installed
-#   - network access to the repo (SSH key or HTTPS auth)
+# Notes:
+#   - This overwrites ONLY tracked files in $HOME.
+#   - It does NOT delete untracked files.
 # ------------------------------------------------------------------------------
 
 REPO="git@github.com:rabdulwahhab/dotfiles.git"
 BARE_DIR="$HOME/.dotfiles"
 BRANCH="main"
 
-# Helper function so we don't rely on shell aliases being set up yet.
+# Directory containing this script (the normal cloned repo from VS Code)
+SRC_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 dot() {
   git --git-dir="$BARE_DIR" --work-tree="$HOME" "$@"
 }
 
-# 1) Create the bare repo if it doesn't exist
+# Create the bare repo if missing, using the already-cloned repo as source
 if [ ! -d "$BARE_DIR" ]; then
-  git clone --bare "$REPO" "$BARE_DIR"
+  git clone --bare "$SRC_DIR" "$BARE_DIR"
 fi
 
-# 2) Ensure the remote URL is correct (idempotent)
-# If origin exists, update it; otherwise add it.
+# Ensure origin points to the canonical remote
 dot remote set-url origin "$REPO" 2>/dev/null || dot remote add origin "$REPO"
 
-# 3) Fetch and force your HOME to match the remote main branch
+# Fetch the desired branch and reset HOME to exactly that fetched state
 dot fetch origin "$BRANCH"
-dot reset --hard "origin/$BRANCH"
+dot reset --hard FETCH_HEAD
 
-# 4) Hide untracked files (otherwise `dotfiles status` would show your entire HOME)
+# Hide untracked files in $HOME
 dot config --local status.showUntrackedFiles no
