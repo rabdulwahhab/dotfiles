@@ -12,5 +12,6 @@
 # load machine-specific overrides (keep this at the bottom)
 [ -f "$HOME/.zshrc.local" ] && . "$HOME/.zshrc.local"
 
-# Init starship
-eval "$(starship init zsh)"
+if command -v starship >/dev/null 2>&1; then
+  eval "$(starship init zsh)"
+fi
