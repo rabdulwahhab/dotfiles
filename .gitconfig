@@ -1,5 +1,5 @@
 [user]
 	name = Rayyan Abdul-Wahhab
 	email = rabdulwahhab@outlook.com
-#[core]
-#	excludesfile = /Users/rayyan/.gitignore
+[core]
+	excludesfile = .gitignore
