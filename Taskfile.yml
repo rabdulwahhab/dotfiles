@@ -3,11 +3,6 @@
 version: '3'
 
 tasks:
-  default:
-    cmds:
-      - task --list
-    silent: true
-
   compare-branch-commits:
     desc: Show commits from a reference branch that are not in a target branch
     summary: |
