@@ -4,16 +4,38 @@ version: '3'
 
 tasks:
   default:
-    desc: Print a greeting message
     cmds:
-      - echo "{{.GREETING}}"
+      - task --list
     silent: true
 
-#  from-home:
-#    cmds:
-#      - pwd
-#
-#  from-working-directory:
-#    dir: '{{.USER_WORKING_DIR}}'
-#    cmds:
-#      - pwd
+  compare-branch-commits:
+    desc: Show commits from a reference branch that are not in a target branch
+    summary: |
+      Prompts for a reference branch and a target branch, then shows commits that
+      exist in the reference branch but not in the target branch.
+
+      Use remote branch names like origin/master and origin/release-2026-04-02.
+    interactive: true
+    silent: true
+    cmds:
+      - |
+        printf "Reference branch containing the commits to check from (use origin/...): "
+        read -r reference_branch
+
+        printf "Target branch to compare against (use origin/...): "
+        read -r target_branch
+
+        printf "Show per-commit file change stats? [y/N]: "
+        read -r verbose_choice
+
+        verbose_flag=""
+
+        case "$verbose_choice" in
+          y|Y|yes|YES)
+            verbose_flag="--stat"
+            ;;
+        esac
+
+        git fetch
+        git log "$target_branch..$reference_branch" --oneline --no-merges $verbose_flag
+
