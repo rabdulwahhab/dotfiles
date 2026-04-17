@@ -14,10 +14,10 @@ tasks:
     silent: true
     cmds:
       - |
-        printf "Reference branch containing the commits to check from (use origin/...): "
+        printf "Reference branch containing the commits to check from (ensure up-to-date): "
         read -r reference_branch
 
-        printf "Target branch to compare against (use origin/...): "
+        printf "Target branch to compare against (ensure up-to-date): "
         read -r target_branch
 
         printf "Show per-commit file change stats? [y/N]: "
