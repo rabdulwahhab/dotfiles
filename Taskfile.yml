@@ -32,5 +32,5 @@ tasks:
         esac
 
         git fetch
-        git log "$target_branch..$reference_branch" --oneline --no-merges $verbose_flag
+        git log "$target_branch..$reference_branch" --oneline --no-merges --cherry-pick $verbose_flag
 
