@@ -34,3 +34,29 @@ tasks:
         git fetch
         git log "$target_branch..$reference_branch" --oneline --no-merges --cherry-pick $verbose_flag
 
+  create-agent-worktree:
+    desc: Create an agent worktree in ../<repo>.worktrees for a branch name
+    summary: |
+      Creates a new worktree at ../<repo>.worktrees/BRANCH_NAME and a matching
+      branch named agent/BRANCH_NAME from the current branch HEAD.
+      The worktrees directory is created if it does not exist.
+
+      Example: task create-agent-worktree BRANCH_NAME=my-task
+    requires:
+      vars: [BRANCH_NAME]
+    vars:
+      WORKTREES_DIR: '../{{base .USER_WORKING_DIR}}.worktrees'
+    cmd: git worktree add {{.WORKTREES_DIR}}/{{.BRANCH_NAME}} -b agent/{{.BRANCH_NAME}} HEAD
+
+  rm-agent-worktree:
+    desc: Remove an agent worktree in ../<repo>.worktrees for a branch name
+    summary: |
+      Removes the worktree at ../<repo>.worktrees/BRANCH_NAME.
+
+      Example: task rm-agent-worktree BRANCH_NAME=my-task
+    requires:
+      vars: [BRANCH_NAME]
+    vars:
+      WORKTREES_DIR: '../{{base .USER_WORKING_DIR}}.worktrees'
+    cmd: git worktree remove {{.WORKTREES_DIR}}/{{.BRANCH_NAME}}
+
