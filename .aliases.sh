@@ -43,6 +43,9 @@ alias gcm='git commit -m'
 alias gp='git push'
 alias gl='git pull'
 alias gcp='git cherry-pick'
+alias gwta='git worktree add'
+alias gwtrm='git worktree remove'
+alias gwtl='git worktree list'
 alias agentfiles-update='git -C ~/Projects/agentfiles pull'
 
 # Miscellaneous
