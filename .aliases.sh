@@ -40,6 +40,10 @@ alias sudo='sudo '
 alias ga='git add'
 alias gs='git status'
 alias gcm='git commit -m'
+alias gp='git push'
+alias gl='git pull'
+alias gcp='git cherry-pick'
+alias agentfiles-update='git -C ~/Projects/agentfiles pull'
 
 # Miscellaneous
 alias weather="curl http://wttr.in"
