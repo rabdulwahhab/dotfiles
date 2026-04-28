@@ -64,7 +64,3 @@ tasks:
       - cmd: git branch -d agent/{{.BRANCH_NAME}}
         ignore_error: true
 
-  agentfiles-update:
-    desc: Pull the latest changes from my agentfiles repo
-    cmd: git -C ~/Projects/agentfiles pull
-
