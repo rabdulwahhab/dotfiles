@@ -15,3 +15,9 @@
 if command -v starship >/dev/null 2>&1; then
   eval "$(starship init zsh)"
 fi
+
+# Sync dotfiles
+dotfiles pull
+
+# Sync agentfiles
+agentfiles-update
