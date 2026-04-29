@@ -17,7 +17,9 @@ if command -v starship >/dev/null 2>&1; then
 fi
 
 # Sync dotfiles
+echo "Syncing dotfiles..."
 dotfiles pull
 
+echo "Syncing agentfiles..."
 # Sync agentfiles
 agentfiles-update
