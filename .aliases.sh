@@ -49,7 +49,7 @@ alias gcp='git cherry-pick'
 alias gwta='git worktree add'
 alias gwtrm='git worktree remove'
 alias gwtl='git worktree list'
-alias empty-commit='git commit --allow-empty -m
+alias empty-commit='git commit --allow-empty -m'
 alias agentfiles-update='git -C ~/Projects/agentfiles pull'
 
 # Miscellaneous
